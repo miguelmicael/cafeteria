@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" /> 
+		<title>Cafeteria Tradicionals</title>
+
+		<link rel="stylesheet" type="text/css" href="./css/css.css" />
+		<link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.css" />
+		<script src="./js/produtos.js"></script>
+		<script type="text/javascript" src="./js/jquery.min.js"></script>
+
+		<script>		
+			
+			
+			var pedidos = [];
+
+			$(function(){
+				$.each(produtos, function(indice, elemento){
+
+					var categoria1 = $("<optgroup />").attr("label", elemento.categoria);
+
+					$.each(elemento.itens, function(indice, produto){
+						categoria1
+							.append($("<option />")
+								.attr("value", produto.id)
+								.text(produto.item + " - " + produto.preco)
+							);
+					});
+
+					$("#menu")
+						.append(categoria1);						
+						
+				});
+				
+				
+				$("#menu option").click(function(){
+					var itemArray = $(this).text().split(" - ");
+					var itemEscolhido = itemArray[0];					
+					var itemPreco = itemArray[1];
+
+					
+					itemPreco = itemPreco.substring(2, itemPreco.length);
+					
+					pedido = {
+								"id": $(this).attr("value"), 
+								"nome":itemEscolhido,
+								"valorUnitario": itemPreco, 
+								"quantidade": "1",
+								"valorTotal": function(){
+								return this.valorUnitario * this.quantidade;
+							 }
+						};
+
+					var existeItem = false;
+					$.each(pedidos, function(indice, item){
+						if(item.id == pedido.id) {
+							item.quantidade = parseInt(item.quantidade) + 1;
+							existeItem = true;
+						}
+					});
+
+					if(!existeItem) {
+						pedidos.push(pedido); 
+					}
+					
+					carregarPedidos();
+					
+				});
+
+				$("#pedidos").on("click", "span" ,function(){
+					
+					$("#valor-total").text(0);  
+					$("#preco-total").val(0);
+					var pedidoId = $(this).parents("tr").attr("id");
+
+					$.each(pedidos, function(indice, item) {
+						console.log(indice+ " - " +item.nome);
+						if(item.id == pedidoId) {
+							pedidos.splice(indice, 1);
+						}
+					});
+
+					$(this).parents("tbody").empty();
+					carregarPedidos();
+				});
+				
+				$("#menu").hide();
+				$("#menu-bt").click(function(){
+					$("#menu").toggle();
+				});
+				
+				$("#pedidos").hide();
+				$("#peCa-bt").click(function(){
+					$("#pedidos").toggle();
+					$("img").toggle();
+				});
+			});
+		
+			
+		</script>
+	</head>
+	<body>
+		<h1>Cafeteria Do Miguel</h1>
+		<div id="menu-div">
+			<h2 class="b1">Menu</h2>
+			<button id="menu-bt" class="btn btn-success btn-sm">Mostrar</button>
+		</div>
+		<div class="col-md-4">
+			<select id="menu" size="10" class="form-control">
+			
+			</select>
+		</div>
+		
+		<div style="clear:both"></div>
+		<div id="peCa-div">
+			<h2>Pedidos/Carrinho</h2>
+			<button id="peCa-bt" class="btn btn-success btn-sm">Mostrar</button>
+		</div>
+		<img src="./img/cafeteria1.jpg" />
+		<table id="pedidos" class="table">
+			<thead>
+				<th>Itens</th>
+				<th>Quantidade</th>
+				<th>Preço Unitário</th>
+				<th>Total</th>
+				<th></th>
+			</thead>
+			<tbody>
+				<tr>
+					<td id="nenhum-item" colspan="5">
+						Nenhum item pedido
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<th colspan="3">Total</th>
+				<th id="valor-total">0</th>
+				<th></th>
+			</tfoot>
+		</table>
+	</body>
+</html>
