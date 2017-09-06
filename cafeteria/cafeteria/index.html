@@ -2,10 +2,11 @@
 <html>
 	<head>
 		<meta charset="utf-8" /> 
-		<title>Cafeteria Tradicionals</title>
+		<title>Cafeteria JM's</title>
 
 		<link rel="stylesheet" type="text/css" href="./css/css.css" />
 		<link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"/>
 		<script src="./js/produtos.js"></script>
 		<script type="text/javascript" src="./js/jquery.min.js"></script>
 
@@ -67,7 +68,7 @@
 					
 				});
 
-				$("#pedidos").on("click", "span" ,function(){
+				$("#pedidos").on("click", "i" ,function(){
 					
 					$("#valor-total").text(0);  
 					$("#preco-total").val(0);
@@ -86,37 +87,41 @@
 				
 				$("#menu").hide();
 				$("#menu-bt").click(function(){
-					$("#menu").toggle();
+					$("#menu").slideToggle(2000);
 				});
 				
 				$("#pedidos").hide();
 				$("#peCa-bt").click(function(){
-					$("#pedidos").toggle();
-					$("img").toggle();
+					$("#pedidos").fadeToggle(1000);
 				});
 			});
 		
 			
 		</script>
+
+		
 	</head>
+	<div id="body">
 	<body>
-		<h1>Cafeteria Do Miguel</h1>
-		<div id="menu-div">
-			<h2 class="b1">Menu</h2>
-			<button id="menu-bt" class="btn btn-success btn-sm">Mostrar</button>
+	<header>
+		<h1><img src="./img/gif6.jpg"/><img src="./img/gif5.jpg"/><img src="./img/gif4.jpg"/><img src="./img/gif3.jpg"/><img src="./img/gif2.jpg"/><img src="./img/gif1.jpg"/><img src="./img/gif.jpg"/>Cafeteria JM's<img src="./img/gif.jpg"/><img src="./img/gif1.jpg"/><img src="./img/gif2.jpg"/><img src="./img/gif3.jpg"/><img src="./img/gif4.jpg"/><img src="./img/gif5.jpg"/><img src="./img/gif6.jpg"/></h1>
+	</header>
+	<main>
+		
+		<div id="menu-div" class="larg">
+			<button id="menu-bt" class="botao1" class="aff">Cardápio</button>
+
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4" id="card">
 			<select id="menu" size="10" class="form-control">
 			
 			</select>
 		</div>
 		
 		<div style="clear:both"></div>
-		<div id="peCa-div">
-			<h2>Pedidos/Carrinho</h2>
-			<button id="peCa-bt" class="btn btn-success btn-sm">Mostrar</button>
+		<div id="peCa-div" class="larg">
+			<button id="peCa-bt" class="botao" class="aff">Pedidos</button>
 		</div>
-		<img src="./img/cafeteria1.jpg" />
 		<table id="pedidos" class="table">
 			<thead>
 				<th>Itens</th>
@@ -128,7 +133,7 @@
 			<tbody>
 				<tr>
 					<td id="nenhum-item" colspan="5">
-						Nenhum item pedido
+						<h4>Nenhum pedido feito</h4>
 					</td>
 				</tr>
 			</tbody>
@@ -138,5 +143,7 @@
 				<th></th>
 			</tfoot>
 		</table>
+	</main>
 	</body>
+	</div>
 </html>
